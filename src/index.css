@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@400;600&display=swap');
+
+:root {
+  --color-primary: #ff6b6b;
+  --color-secondary: #f9c74f;
+  --color-tertiary: #90be6d;
+  --color-quaternary: #43aa8b;
+  --color-quinary: #577590;
+  --color-light: #f3f4f6;
+  --color-dark: #1f2937;
+
+  --spacing-xxs: 0.25rem;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-xxl: 4rem;
+
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+
+  --input-button-padding-y: 0.75rem;
+  --input-button-padding-x: 1.25rem;
+  --input-button-font-size: 1.6rem;
+  --input-button-border-radius: 0.5rem;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Parkinsans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-dark);
+  background-color: var(--color-light);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Parkinsans', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.input,
+.button {
+  padding: var(--input-button-padding-y) var(--input-button-padding-x);
+  font-size: var(--input-button-font-size);
+  border-radius: var(--input-button-border-radius);
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.button {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+}
+
+.button--primary {
+  color: var(--color-light);
+  background-color: var(--color-primary);
+}
+
+.button--secondary {
+  color: var(--color-light);
+  background-color: var(--color-secondary);
+}
+
+.button--quinary {
+  color: var(--color-light);
+  background-color: var(--color-quinary);
+}
+
+.input {
+  display: block;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.checklist__item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+}
+
+.checklist__item span {
+  font-weight: 600;
+}
+
+.checklist__item input[type='checkbox'] {
+  display: none;
+}
+
+.checklist__item .button {
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  margin-left: auto;
+}
+
+.checklist__item label {
+  cursor: pointer;
+  flex-grow: 1;
+  font-size: 1.6rem;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
