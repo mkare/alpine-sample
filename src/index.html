@@ -21,6 +21,13 @@
         <button @click="addTask" class="button button--primary">Add</button>
       </div>
 
+      <!-- Filtering -->
+      <div x-show="tasks.length > 0">
+        <button @click="filter = 'all'" class="button button--quinary">All</button>
+        <button @click="filter = 'active'" class="button button--quinary">Active</button>
+        <button @click="filter = 'completed'" class="button button--quinary">Completed</button>
+      </div>
+
       <!-- Task List -->
       <ul class="checklist">
         <template x-for="(task, index) in filteredTasks" :key="index">
@@ -42,11 +49,18 @@
         </template>
       </ul>
 
-      <!-- Filtering -->
-      <div>
-        <button @click="filter = 'all'" class="button button--quinary">All</button>
-        <button @click="filter = 'active'" class="button button--quinary">Active</button>
-        <button @click="filter = 'completed'" class="button button--quinary">Completed</button>
+      <!-- Fetch Posts -->
+      <div class="posts-section">
+        <button @click="fetchPosts" class="button button--primary">Fetch Posts</button>
+        <div x-show="isLoading" class="loading">Loading posts...</div>
+        <ul>
+          <template x-for="post in posts" :key="post.id">
+            <li>
+              <strong x-text="post.title"></strong>
+              <p x-text="post.body"></p>
+            </li>
+          </template>
+        </ul>
       </div>
     </div>
   </body>
