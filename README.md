@@ -17,3 +17,5 @@ touch webpack.config.js
 # install Babel and Babel Loader
 
 npm install --save-dev babel-loader @babel/core @babel/preset-env
+
+https://alpinejs.dev/essentials/state
