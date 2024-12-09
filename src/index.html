@@ -7,48 +7,49 @@
   </head>
   <body>
     <div x-data="todoApp" class="container">
-      <h1>Task Management Application</h1>
+      <div>
+        <h1>Task Management Application</h1>
 
-      <!-- Add Task -->
-      <div class="form-group">
-        <input
-          type="text"
-          :value="newTask"
-          @input="newTask = $event.target.value"
-          placeholder="Add a new task"
-          class="input"
-        />
-        <button @click="addTask" class="button button--primary">Add</button>
+        <!-- Add Task -->
+        <div class="form-group">
+          <input
+            type="text"
+            :value="newTask"
+            @input="newTask = $event.target.value"
+            placeholder="Add a new task"
+            class="input"
+          />
+          <button @click="addTask" class="button button--primary">Add</button>
+        </div>
+
+        <!-- Filtering -->
+        <div x-show="tasks.length > 0">
+          <button @click="filter = 'all'" class="button button--quinary">All</button>
+          <button @click="filter = 'active'" class="button button--quinary">Active</button>
+          <button @click="filter = 'completed'" class="button button--quinary">Completed</button>
+        </div>
+
+        <!-- Task List -->
+        <ul class="checklist">
+          <template x-for="(task, index) in filteredTasks" :key="index">
+            <li class="checklist__item">
+              <input
+                type="checkbox"
+                @change="toggleTaskCompletion(index)"
+                :checked="task.completed"
+                :id="'task-' + index"
+              />
+              <span x-text="index + 1"></span>
+              <label
+                :class="{ 'line-through': task.completed }"
+                x-text="task.text"
+                :for="'task-' + index"
+              ></label>
+              <button @click="deleteTask(index)" class="button button--secondary">Delete</button>
+            </li>
+          </template>
+        </ul>
       </div>
-
-      <!-- Filtering -->
-      <div x-show="tasks.length > 0">
-        <button @click="filter = 'all'" class="button button--quinary">All</button>
-        <button @click="filter = 'active'" class="button button--quinary">Active</button>
-        <button @click="filter = 'completed'" class="button button--quinary">Completed</button>
-      </div>
-
-      <!-- Task List -->
-      <ul class="checklist">
-        <template x-for="(task, index) in filteredTasks" :key="index">
-          <li class="checklist__item">
-            <input
-              type="checkbox"
-              @change="toggleTaskCompletion(index)"
-              :checked="task.completed"
-              :id="'task-' + index"
-            />
-            <span x-text="index + 1"></span>
-            <label
-              :class="{ 'line-through': task.completed }"
-              x-text="task.text"
-              :for="'task-' + index"
-            ></label>
-            <button @click="deleteTask(index)" class="button button--secondary">Delete</button>
-          </li>
-        </template>
-      </ul>
-
       <!-- Fetch Posts -->
       <div class="posts-section">
         <button @click="fetchPosts" class="button button--primary">Fetch Posts</button>
@@ -62,6 +63,152 @@
           </template>
         </ul>
       </div>
+
+      <div class="alpine-demo">
+        <h1>Alpine.js Demo</h1>
+
+        <!-- x-data - Declare a new Alpine component and its data for a block of HTML -->
+        <div
+          x-data="{
+          open: false, 
+          name: 'Brad',
+          search: '',
+          posts: [
+            {title: 'Post One'},
+            {title: 'Post Two'},
+            {title: 'Post Three'},
+            {title: 'Post Four'},
+          ]
+        }"
+        >
+          <!-- x-on - Listen for browser events on an element -->
+          <!-- You can also use @click -->
+          <!-- x-bind - Dynamically set HTML attributes on an element -->
+          <button
+            x-on:click="open = !open"
+            :class="open ? 'button button--quinary' : 'button button--primary'"
+          >
+            Toggle
+          </button>
+
+          <!-- x-show - Toggle the visibility of an element-->
+          <div x-show="open" x-transition x-cloak>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat quos laboriosam,
+              minus rerum molestias soluta nisi nulla eos error nihil.
+            </p>
+          </div>
+
+          <!-- x-text - Set the text content of an element / display data -->
+          <div class="my-2">The value of name is <span x-text="name" class="font-bold"></span></div>
+
+          <!-- x-effect - Execute a script each time one of its dependancies change -->
+          <div x-effect="console.log(open)"></div>
+
+          <!-- x-model - Synchronize a piece of data with an input element -->
+          <div class="form-group">
+            <input
+              x-model="search"
+              type="text"
+              class="input"
+              placeholder="Search for something..."
+            />
+          </div>
+          <p>
+            <span class="font-bold">Searching for:</span>
+            <span x-text="search"></span>
+          </p>
+
+          <!-- x-if - Conditionally add/remove a block of HTML from the page entirely -->
+          <template x-if="open">
+            <div>Template based on a condition</div>
+          </template>
+
+          <!-- x-for - Loop over an array of data -->
+          <h3 class="font-bold">Posts</h3>
+          <ul>
+            <template x-for="post in posts">
+              <li x-text="post.title"></li>
+            </template>
+          </ul>
+          <button @click="posts.push({title: 'New Post'})" class="button button--primary">
+            Add Post
+          </button>
+
+          <div class="my-3" x-data="{ disabled: false }">
+            <!-- x-ref - Reference elements directly by their specified keys using the $refs magic property -->
+            <div class="my-2" x-ref="text">Hello World</div>
+            <button
+              @click="
+                if ($refs.text) {
+                  $refs.text.remove(); 
+                  disabled = true;
+                }
+              "
+              :disabled="disabled"
+              class="button button--secondary"
+            >
+              Click
+            </button>
+          </div>
+
+          <!-- x-html - Set the inner HTML of an element -->
+          <!-- <div x-html="(await axios.get('./partial.html')).data">...</div> -->
+
+          <!-- $el - Reference the current DOM element -->
+          <button x-on:click="$el.innerHTML = 'Hello World'" class="my-2 button button--primary">
+            Replace Text
+          </button>
+
+          <!-- $watch - Watch a component property -->
+          <div x-init="$watch('posts', value => console.log(value))"></div>
+
+          <!-- $dispatch - Shortcut for dispatching browser events -->
+          <div @notify="alert('You have been notified!')" class="my-2">
+            <button @click="$dispatch('notify')" class="button button--quinary">Notify</button>
+          </div>
+
+          <!-- $data - Gives access to current Alpine data scope -->
+          <button @click="getLatestPost($data.posts)" class="my-2 button button--primary">
+            Get Latest Post
+          </button>
+
+          <div>
+            <h3>Enter a date:</h3>
+            <div class="form-group">
+              <input class="input" x-mask="99/99/9999" placeholder="MM/DD/YYYY" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stores: Dark Mode -->
+      <div x-data :class="$store.darkMode.on && 'dark-mode text-white'" class="alpine-demo">
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, reiciendis ipsa. Sed,
+          illo, repellat ipsam, perspiciatis soluta labore quasi in eos hic harum praesentium
+          perferendis? Dignissimos, unde provident voluptas, ad neque ea tempora nam ratione
+          eligendi modi laudantium, iusto officia.
+        </p>
+
+        <button
+          @click="$store.darkMode.toggle()"
+          :class="$store.darkMode.on && 'button button--quinary' || 'button button--primary'"
+        >
+          Toggle Dark Mode
+        </button>
+      </div>
     </div>
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.store('darkMode', {
+          on: false,
+
+          toggle() {
+            this.on = !this.on;
+          },
+        });
+      });
+    </script>
   </body>
 </html>

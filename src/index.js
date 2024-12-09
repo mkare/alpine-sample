@@ -4,8 +4,10 @@ import './index.css';
 window.Alpine = Alpine;
 
 Alpine.data('todoApp', () => ({
-  newTask: '',
+  isLoading: false,
+  posts: [],
   tasks: [],
+  newTask: '',
   filter: 'all',
 
   addTask() {
@@ -42,6 +44,16 @@ Alpine.data('todoApp', () => ({
       console.error('Error fetching posts:', error);
     } finally {
       this.isLoading = false; // Yüklenme durumu bitiyor
+    }
+  },
+
+  getLatestPost(posts) {
+    if (posts && posts.length > 0) {
+      const latestPost = posts[posts.length - 1];
+      console.log('Latest Post:', latestPost);
+      alert(`Latest Post: ${latestPost.title}`);
+    } else {
+      alert('No posts available.');
     }
   },
 }));
